@@ -28,7 +28,7 @@ recommended_lure, recommended_bait, other_lures_baits, recommended_action, recom
   const response = await fetch("https://api-inference.huggingface.co/models/google/flan-t5-small", {
     method: "POST",
     headers: {
-      "Authorization": "Bearer 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", // <- Replace with your API key
+      "Authorization": "Bearer insert key", // <- Replace with your API key
       "Content-Type": "application/json"
     },
     body: JSON.stringify({ inputs: prompt })
