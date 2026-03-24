@@ -74,10 +74,10 @@ function getAdvice() {
   // Include state if provided
   const stateDisplay = state ? ` (Fishing in ${state.charAt(0).toUpperCase() + state.slice(1)})` : "";
 
-  document.getElementById("lure").innerText = lure + stateDisplay;
-  document.getElementById("bait").innerText = bait + stateDisplay;
-  document.getElementById("otherLures").innerText = otherLures + stateDisplay;
-  document.getElementById("action").innerText = action + stateDisplay;
-  document.getElementById("locationAdvice").innerText = locationAdvice + stateDisplay;
-  document.getElementById("otherAdvice").innerText = otherAdvice + stateDisplay;
+  document.getElementById("lure").innerText = lure;
+  document.getElementById("bait").innerText = bait;
+  document.getElementById("otherLures").innerText = otherLures;
+  document.getElementById("action").innerText = action;
+  document.getElementById("locationAdvice").innerText = locationAdvice;
+  document.getElementById("otherAdvice").innerText = otherAdvice;
 }
