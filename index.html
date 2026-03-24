@@ -5,25 +5,69 @@
 </head>
 <body>
 
-<h1>Fishing Advice 🎣</h1>
+<h1>Fishing Advice:</h1>
 
-<label>Target Fish:</label>
+<label>Location:</label>
 <select id="fish">
-  <option>Bass</option>
-  <option>Catfish</option>
+  <option>US states</option>
+</select>
+
+<label>Water type:</label>
+<select id="Water type">
+  <option>Pond</option>
+  <option>Small Lake</option>
+  <option>Large Lake</option>
+  <option>Large Lake</option>
+  <option>Creek</option>
+  <option>Small River</option>
+  <option>Large River</option>
+  <option>Sea/Ocean</option>
+</select>
+
+  <label>Fishing Spot:</label>
+<select id="Spot">
+  <option>Shore</option>
+  <option>Wading</option>
+  <option>Boat/kayak</option>
 </select>
 
 <label>Time of Day:</label>
 <select id="time">
-  <option>Morning</option>
-  <option>Afternoon</option>
+  <option>Early Morning</option>
+  <option>Mid Morning</option>
+  <option>Noon</option>
+  <option>Early Afternoon</option>
+  <option>Late Afternoon</option>
   <option>Evening</option>
+  <option>Night</option>
 </select>
 
+<label>Season:</label>
+<select id="Season">
+  <option>Winter</option>
+  <option>Spring</option>
+  <option>Summer</option>
+  <option>Fall</option>
+</select>
+  
 <label>Weather:</label>
 <select id="weather">
   <option>Sunny</option>
+  <option>Partially clowdy</option>
   <option>Cloudy</option>
+  <option>Overcast</option>
+  <option>Rainy</option>
+  <option>Snowy</option>
+</select>
+
+  <label>Target Fish:</label>
+<select id="fish">
+  <option>Largemouth Bass</option>
+  <option>Smallmouth Bass</option>
+  <option>Catfish</option>
+  <option>Sunfish</option>
+  <option>Brown Trout</option>
+  <option>Rainbow Trout</option>
 </select>
 
 <button onclick="getAdvice()">Get Advice</button>
