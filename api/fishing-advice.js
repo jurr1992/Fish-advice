@@ -1,10 +1,15 @@
 export default async function handler(req, res) {
   try {
-    // Vercel automatically parses JSON if Content-Type is application/json
-    const body = req.body; 
-    const prompt = body.prompt;
+    console.log("Request method:", req.method);
+    console.log("Request body:", req.body);
 
-    // Call Hugging Face API
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Method not allowed" });
+    }
+
+    const prompt = req.body.prompt;
+    console.log("Prompt sent to HF:", prompt);
+
     const response = await fetch(
       "https://api-inference.huggingface.co/models/google/flan-t5-small",
       {
@@ -18,9 +23,10 @@ export default async function handler(req, res) {
     );
 
     const result = await response.json();
+    console.log("Raw HF API result:", result);
 
-    // Return result to frontend
     res.status(200).json(result);
+
   } catch (err) {
     console.error("Error in function:", err);
     res.status(500).json({ error: "Server error" });
