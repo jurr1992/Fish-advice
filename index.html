@@ -1,10 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>My First App</title>
+  <title>Fishing Advisor</title>
 </head>
 <body>
-  <h1>Hello world 🚀</h1>
-  <p>Your site is live!</p>
+
+<h1>Fishing Advice 🎣</h1>
+
+<label>Target Fish:</label>
+<select id="fish">
+  <option>Bass</option>
+  <option>Catfish</option>
+</select>
+
+<label>Time of Day:</label>
+<select id="time">
+  <option>Morning</option>
+  <option>Afternoon</option>
+  <option>Evening</option>
+</select>
+
+<label>Weather:</label>
+<select id="weather">
+  <option>Sunny</option>
+  <option>Cloudy</option>
+</select>
+
+<button onclick="getAdvice()">Get Advice</button>
+
+<h2 id="result"></h2>
+
+<script src="script.js"></script>
+
 </body>
 </html>
