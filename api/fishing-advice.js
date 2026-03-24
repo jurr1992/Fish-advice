@@ -1,17 +1,17 @@
 export default async function handler(req, res) {
   try {
-    console.log("Request method:", req.method);
-    console.log("Request body:", req.body);
-
     if (req.method !== "POST") {
       return res.status(405).json({ error: "Method not allowed" });
     }
 
-    const prompt = req.body.prompt;
+    const body = req.body;
+    const prompt = body.prompt;
+
     console.log("Prompt sent to HF:", prompt);
 
+    // Updated endpoint for Hugging Face Router API
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/google/flan-t5-small",
+      "https://router.huggingface.co/api/models/google/flan-t5-small",
       {
         method: "POST",
         headers: {
