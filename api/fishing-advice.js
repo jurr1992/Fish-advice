@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     console.log("Prompt sent to HF:", prompt);
 
     const response = await fetch(
-      "https://api-inference.huggingface.co/pipeline/text2text-generation/google/flan-t5-small",
+      "https://router.huggingface.co/pipeline/text2text-generation/google/flan-t5-small",
       {
         method: "POST",
         headers: {
