@@ -1,5 +1,7 @@
-function getAdvice() {
-  const state = document.getElementById("state").value.trim().toLowerCase();
+// script.js
+
+async function getAIAdvice() {
+  const state = document.getElementById("state").value;
   const waterType = document.getElementById("waterType").value;
   const spot = document.getElementById("spot").value;
   const time = document.getElementById("time").value;
@@ -7,77 +9,47 @@ function getAdvice() {
   const weather = document.getElementById("weather").value;
   const fish = document.getElementById("fish").value;
 
-  let lure = "";
-  let bait = "";
-  let otherLures = "";
-  let action = "";
-  let locationAdvice = "";
-  let otherAdvice = "";
+  const prompt = `
+You are a fishing expert.
+User inputs:
+State: ${state}
+Water type: ${waterType}
+Spot: ${spot}
+Time: ${time}
+Season: ${season}
+Weather: ${weather}
+Target Fish: ${fish}
 
-  // Example logic - expand as needed
-  switch(fish) {
-    case "Largemouth Bass":
-      lure = "Spinnerbait";
-      bait = "Soft plastic worms";
-      otherLures = "Crankbait, Jigs, Topwater lures";
-      action = "Slow, steady retrieve in the morning; faster in the afternoon";
-      locationAdvice = "Near structures like logs, weed edges, and drop-offs";
-      otherAdvice = "Avoid overly deep open water during bright, sunny days";
-      break;
+Return a JSON object with keys:
+recommended_lure, recommended_bait, other_lures_baits, recommended_action, recommended_location, other_advice
+`;
 
-    case "Smallmouth Bass":
-      lure = "Jig or Crankbait";
-      bait = "Minnows or worms";
-      otherLures = "Spinnerbait, Soft plastics";
-      action = "Steady retrieve near rocks and currents";
-      locationAdvice = "Rocks, riffles, and deeper river channels";
-      otherAdvice = "Look for areas with moderate water flow";
-      break;
+  // Call Hugging Face Inference API
+  const response = await fetch("https://api-inference.huggingface.co/models/google/flan-t5-small", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer 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", // <- Replace with your API key
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ inputs: prompt })
+  });
 
-    case "Catfish":
-      lure = "Cut bait";
-      bait = "Chicken liver or stink bait";
-      otherLures = "Nightcrawlers, shrimp";
-      action = "Let it sit near the bottom; check frequently";
-      locationAdvice = "Deep water near structures or drop-offs";
-      otherAdvice = "Fish is more active during dusk and night";
-      break;
+  const result = await response.json();
 
-    case "Sunfish":
-      lure = "Small jigs or flies";
-      bait = "Worms or crickets";
-      otherLures = "Tiny soft plastics";
-      action = "Slow, gentle retrieve near surface";
-      locationAdvice = "Shallow water near vegetation or docks";
-      otherAdvice = "Great for kids or beginners; very easy to catch";
-      break;
-
-    case "Brown Trout":
-    case "Rainbow Trout":
-      lure = "Small spinners or flies";
-      bait = "Live worms or dough bait";
-      otherLures = "Small spoons, soft plastics";
-      action = "Steady retrieve along currents";
-      locationAdvice = "Cool, flowing water; near rocks and pools";
-      otherAdvice = "Avoid bright sunlight; early morning or evening is best";
-      break;
-
-    default:
-      lure = "Standard bait";
-      bait = "Worms or small fish pieces";
-      otherLures = "Try different lures and baits";
-      action = "Adjust based on conditions";
-      locationAdvice = "Try various spots until you find fish";
-      otherAdvice = "Pay attention to weather and water conditions";
+  // The response text is usually in result[0].generated_text
+  let aiOutput;
+  try {
+    aiOutput = JSON.parse(result[0].generated_text);
+  } catch (err) {
+    console.error("Error parsing AI output:", result);
+    alert("AI returned invalid JSON. Try again.");
+    return;
   }
 
-  // Include state if provided
-  const stateDisplay = state ? ` (Fishing in ${state.charAt(0).toUpperCase() + state.slice(1)})` : "";
-
-  document.getElementById("lure").innerText = lure;
-  document.getElementById("bait").innerText = bait;
-  document.getElementById("otherLures").innerText = otherLures;
-  document.getElementById("action").innerText = action;
-  document.getElementById("locationAdvice").innerText = locationAdvice;
-  document.getElementById("otherAdvice").innerText = otherAdvice;
-}
+  // Populate HTML with AI outputs
+  document.getElementById("lure").innerText = aiOutput.recommended_lure;
+  document.getElementById("bait").innerText = aiOutput.recommended_bait;
+  document.getElementById("otherLures").innerText = aiOutput.other_lures_baits;
+  document.getElementById("action").innerText = aiOutput.recommended_action;
+  document.getElementById("locationAdvice").innerText = aiOutput.recommended_location;
+  document.getElementById("otherAdvice").innerText = aiOutput.other_advice;
